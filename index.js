@@ -179,8 +179,8 @@ async function renderItemPacks(itemPacks) {
     let packCount = 0;
     const currentDate = Math.floor(Date.now() / 1000);
 
-    // Get the base URL of the current page
-    const baseUrl = window.location.origin;
+    // Base URL for GitHub Pages (adjust as needed)
+    const baseUrl = window.location.origin; // This gets the base URL of your current site
 
     Object.values(itemPacks).forEach(pack => {
         if (!['100 Coins', '500 Coins', '1000 Coins', '2100 Coins', '5500 Coins', 'Admin Items', 'Moderator Items', 'Community Badge', 'Content Creator Badge', 'Pride Pin', 'GAB 1 Participant', 'GAB 1 Winner'].includes(pack.title)) {
@@ -191,10 +191,10 @@ async function renderItemPacks(itemPacks) {
 
             const itemImages = pack.items.map(item => `<img src="CosmeticsPNG/${item}.png" alt="${item}" title="${item}" />`).join('');
 
-            // Create the pack URL dynamically based on the current URL and pack title
+            // Construct the URL based on pack title, assuming titles are URL-friendly
             const packUrl = `${baseUrl}/${encodeURIComponent(pack.title.replace(/ /g, '-'))}`;
 
-            console.log(`Generated URL: ${packUrl}`); // Log the generated URL
+            console.log(`Generated URL: ${packUrl}`); // Log the generated URL for debugging
 
             packDiv.innerHTML = `<h3>${pack.title}</h3>
                                  ${itemImages}
