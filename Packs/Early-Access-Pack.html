@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Early Access Pack</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #2C2F33;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .pack-info {
+            background-color: #7289DA;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .pack-info h1 {
+            margin: 0 0 10px 0;
+        }
+
+        .pack-info p {
+            margin: 10px 0;
+        }
+
+        .items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .item {
+            background-color: #23272A;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+            min-width: 150px;
+            max-width: 200px;
+            width: auto;
+            white-space: normal;
+        }
+
+        .item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Early Access Pack</h1>
+    </div>
+
+    <div class="pack-info" id="pack-info">
+        <!-- Pack information will be injected here -->
+    </div>
+
+    <div class="items" id="items">
+        <!-- Items will be injected here -->
+    </div>
+
+    <script>
+        async function fetchPackData() {
+            try {
+                const response = await fetch('https://api.slin.dev/grab/v1/get_shop_products?version=2');
+                const data = await response.json();
+                return data['pack_early_access_2'];
+            } catch (error) {
+                console.error("Error fetching pack data:", error);
+                return null;
+            }
+        }
+
+        async function fetchItemData() {
+            try {
+                const response = await fetch('https://api.slin.dev/grab/v1/get_shop_items?version=2');
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error("Error fetching item data:", error);
+                return null;
+            }
+        }
+
+        function renderPackInfo(pack) {
+            const packInfoContainer = document.getElementById('pack-info');
+
+            if (!pack) {
+                packInfoContainer.innerHTML = '<p>Error loading pack data.</p>';
+                return;
+            }
+
+            packInfoContainer.innerHTML = `
+                <h1>${pack.title}</h1>
+                <p>${pack.description}</p>
+                <p>Price: $${pack.price_usd}</p>
+                <p>Active: ${pack.active ? 'Yes' : 'No'}</p>
+                <p>End Date: ${new Date(pack.date_end * 1000).toLocaleDateString()}</p>
+            `;
+        }
+
+        function renderItems(items, itemData) {
+            const itemsContainer = document.getElementById('items');
+            itemsContainer.innerHTML = '';
+
+            items.forEach(item => {
+                const itemDetails = itemData[item] || {};
+                const itemName = itemDetails.title || item.replace(/_/g, ' ');
+                const itemImage = `https://github.com/vestrialy/GRAB-Cosmetics/raw/main/CosmeticsPNG/${item}.png`;
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item';
+
+                itemDiv.innerHTML = `
+                    <h3>${itemName}</h3>
+                    <img src="${itemImage}" alt="${itemName}">
+                `;
+                itemsContainer.appendChild(itemDiv);
+            });
+        }
+
+        async function init() {
+            const [pack, itemData] = await Promise.all([fetchPackData(), fetchItemData()]);
+            renderPackInfo(pack);
+            if (pack && pack.items) {
+                renderItems(pack.items, itemData);
+            }
+        }
+
+        init();
+    </script>
+</body>
+
+</html>
