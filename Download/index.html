@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Cosmetics</title>
+    <style>
+        body {
+            background-image: linear-gradient(#5f8bc2, #cfe0ea, #5f8bc2);
+            color: #327DAF;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            user-select: none; /* Prevent text selection globally */
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.3); /* Slightly transparent background */
+            color: #327DAF;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+        }
+        h1 {
+            margin: 0 0 20px 0;
+            font-size: 2em;
+        }
+        .download-button {
+            display: inline-block;
+            background-color: #327DAF;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .download-button:hover {
+            background-color: #235a8e;
+            transform: scale(1.05);
+        }
+        .download-button:active {
+            background-color: #1a487a;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Download Cosmetics</h1>
+        <a href="Cosmetics.zip" class="download-button" download>Download Now</a>
+    </div>
+</body>
+</html>
